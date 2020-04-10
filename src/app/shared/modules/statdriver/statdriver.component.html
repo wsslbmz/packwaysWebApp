@@ -1,0 +1,27 @@
+<div class="card text-white bg-{{bgClass}}">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-xl-3 text-xs-center">
+                <i class="fa {{icon}} fa-3x"></i>&nbsp;
+            </div>
+            <div class="col-xl-9 text-xs-center">
+                <div class="d-block huge">&nbsp;&nbsp;{{count[0]}}&nbsp;</div>
+                <div class="d-block"><h6>{{label}}</h6></div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer text-xs-center"> <small>
+        <span class="float-left" style="color: black"><b>{{count[1]}}/EnChemin </b> &nbsp;</span>
+        <span class="float-left" style="color:black"><b>{{count[2]}}/ChezLivreur </b>&nbsp;</span>
+        <span class="float-left" style="color: black"><b>{{count[3]}}/EnCours </b>&nbsp;</span>
+        <span class="float-left" style="color: black"><b>{{count[4]}}/Livrée </b>&nbsp;</span>
+        <span class="float-left" style="color: black"><b>{{count[5]}}/RNF </b> &nbsp;</span>
+        <span class="float-left" style="color: black"><b>{{count[6]}}/RF</b></span> </small>               
+    </div>
+    <div class="card-footer" hidden>
+        <span class="float-left">View Details {{data}}</span>
+        <a href="javascript:void(0)" class="float-right card-inverse">
+            <span ><i class="fa fa-arrow-circle-right"></i></span>
+        </a>
+    </div>
+</div>

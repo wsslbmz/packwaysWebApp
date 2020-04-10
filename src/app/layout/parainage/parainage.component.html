@@ -1,0 +1,32 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="'Parainage'" [icon]="'fa-users'"></app-page-header>
+  <div class="row">
+      <div class="row">
+          <div class="col-xl-12 text-xs-center">
+                  <div class="card-body table-responsive">
+                      <table class="table table-hover table-bordered" [mfData]="items" #mf="mfDataTable" [mfRowsOnPage]="30">
+                          <thead>
+                              <tr>
+                                  <th style="width:20%">Nom et prènom</th>
+                                  <th style="width:7%">Nombre de colis Livreés</th>                                
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let tripsUser of mf.data">                                
+                                  <td>{{tripsUser[0]}}</td>
+                                  <td>{{tripsUser[1]}}</td>                                                                
+                              </tr>
+                          </tbody>
+                          <tfoot>
+                              <tr>
+                                  <td colspan="4">
+                                      <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+                                  </td>
+                              </tr>
+                          </tfoot>
+                      </table>                    
+                  </div>
+          </div>
+  </div>
+  </div>
+</div>

@@ -1,0 +1,274 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="'Gestion des colis supprimés'" [icon]="'fa-table'"></app-page-header>
+  <div class="row">
+      <div class="card-body table-responsive">                                                     
+          <table class="table" [mfData]="items" #mf="mfDataTable" id="myTable">
+                  <thead>
+                          <tr>
+                                  
+                                  <th style="width:2%">REF</th>
+                                  <th style="width:10%">Source</th>
+                                  <th style="width:10%">Déstination</th>
+                                  <th style="width:10%"><mfDefaultSorter by="statusTrip">Status</mfDefaultSorter></th>
+                                  <th style="width:6%"><mfDefaultSorter by="userTrip.nameUser">Expéditeur</mfDefaultSorter></th>
+                                  <th style="width:10%">Postulation</th>
+                                  <th style="width:2%">Frais</th>
+                                  <th style="width:3%">Prix</th>
+                                  <th style="width:4%">E.financier</th>
+                                  <th style="width:3%">Tentatives</th>
+                                  <th style="width:15%">Actions</th>
+                          </tr>
+                  </thead>
+                  
+                  <tbody>
+                          <tr *ngFor="let trip of items" id="trip-row-{{trip.idTrip}}" >
+                                  <td >{{trip.refTrip}}</td>
+                                  <td>{{trip.sourceTrip.cityAdr}}</td>
+                                  <td>{{trip.destTrip.cityAdr}}</td>
+                                  <td>{{trip.statusTrip}}</td>
+                                  <td>{{ trip.userTrip.nameUser }}</td>
+                                  <td>{{changeDateFormat(trip.createdday)}}</td>
+                                  <td>{{ trip.costTrip }}</td>
+                                  <td>{{ trip.packageTrip.valPackage }}</td>
+                                  <td>{{ showFinancialStatus(trip) }}</td>
+                                  <td>{{ trip.nbTentative }}</td>
+                                  <td>
+                                          <button type="button" class="mat-mini-fab" title="Supprimer">
+                                                  <i class="material-icons" (click)="openBlModal2(contentdeleteTrip,trip)" > delete </i>
+                                          </button>                                                        
+                                          <button type="button" class="mat-mini-fab" title="Détails">
+                                                  <i class="material-icons" (click)="infoTrip(content2, trip)"> open_in_new </i>
+                                          </button>
+                                                                                            
+                                  </td>
+
+                          </tr>
+                  </tbody>
+          </table>
+  </div>
+</div>
+
+<ng-template #content2 let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title">Détails de trip:&nbsp; {{objTrip.refTrip}} </h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+                <div class="row">
+                        <div class="col-xl-4 text-xs-center"  *ngIf="objTrip.codeExp">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border text-center"><h6>Code éxpéditeur</h6></legend>
+                                        <div class="control-group">                                
+                                                <label class="text-center font-weight-light">{{objTrip.codeExp}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.codeTrip">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Code déstinataire</h6></legend>
+                                        <div class="control-group">                                
+                                                <label  center class="font-weight-light text-center">{{objTrip.codeTrip}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.userTrip.nameUser && objTrip.userTrip.mobileUser">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Expéditeur</h6></legend>
+                                        <div class="control-group">                                
+                                                <label center class="font-weight-light">{{objTrip.userTrip.nameUser}}&nbsp;-&nbsp;{{objTrip.userTrip.mobileUser}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>  
+
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.destTrip.contactAdr && objTrip.destTrip.mobileAdr">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Déstinateur</h6></legend>
+                                        <div class="control-group">                                
+                                                <label  center class="font-weight-light">{{objTrip.destTrip.contactAdr}}&nbsp;-&nbsp;{{objTrip.destTrip.mobileAdr}}&nbsp;-&nbsp;{{objTrip.destTrip.mobileAdr2}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>
+                        <div class="col-xl-4 text-xs-center">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Conducteur</h6></legend>
+                                        <div class="control-group">                                
+                                                <label center class="font-weight-light" *ngIf="objTrip.driverTrip">{{objTrip.driverTrip.nameDriver}}&nbsp;-&nbsp;{{objTrip.driverTrip.mobileDriver}}</label>
+                                                <label align ="center" class="font-weight-light" *ngIf="!objTrip.driverTrip">---</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.timingTrip">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Délais</h6></legend>
+                                        <div class="control-group">                                
+                                                <label center class="font-weight-light">{{objTrip.timingTrip}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div> 
+
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.statusTrip">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Status actuelle</h6></legend>
+                                        <div class="control-group">                                
+                                                <label  class="font-weight-light">{{objTrip.statusTrip}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.prevStatusTrip">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Status précédente</h6></legend>
+                                        <div class="control-group">                                
+                                                <label  class="font-weight-light">{{objTrip.prevStatusTrip}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.costTrip">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Coût de livraison</h6></legend>
+                                        <div class="control-group">                                
+                                                <label  class="font-weight-light">{{objTrip.costTrip}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.packageTrip.valPackage">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Valeur de colis</h6></legend>
+                                        <div class="control-group">                                
+                                                <label  class="font-weight-light">{{objTrip.packageTrip.valPackage}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div> 
+                
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.createdday">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Date de postulation</h6></legend>
+                                        <div class="control-group">                                
+                                                <label  class="font-weight-light">{{changeDateFormat(objTrip.createdday)}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.affectedday">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Date d'affectation</h6></legend>
+                                        <div class="control-group">                                
+                                                <label  class="font-weight-light">{{changeDateFormat(objTrip.affectedday)}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.getedday">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Date de ramassage</h6></legend>
+                                        <div class="control-group">                                
+                                                <label  class="font-weight-light">{{changeDateFormat(objTrip.getedday)}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div> 
+                
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.startdelday">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Début de livraison</h6></legend>
+                                        <div class="control-group">                                
+                                                <label  class="font-weight-light">{{changeDateFormat(objTrip.startdelday)}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.livredday">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Fin de livraison</h6></legend>
+                                        <div class="control-group">                                
+                                                <label  class="font-weight-light">{{changeDateFormat(objTrip.livredday)}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.prereturnedday">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Date de retour</h6></legend>
+                                        <div class="control-group">                                
+                                                <label  class="font-weight-light">{{changeDateFormat(objTrip.prereturnedday)}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div> 
+                
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.descriptionTrip">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Description</h6></legend>
+                                        <div class="control-group">                                
+                                                <label  class="font-weight-light">{{objTrip.descriptionTrip}}</label>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.lastupdateby!==null">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Dernière modification</h6></legend>
+                                        <div class="control-group">                                
+                                                <ul>                                                        
+                                                        <li>{{objTrip.lastupdateby}}
+                                                                <ul>
+                                                                <li>{{objTrip.lastupdateday}}</li>
+                                                                </ul>
+                                                        </li>
+                                                </ul>                                                                                                             
+                                        </div>
+                                </fieldset>
+                        </div>
+                        
+                </div>
+                <div class="row">
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.msgTrip && objTrip.msgTrip.length > 0">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Messages</h6></legend>
+                                        <div class="control-group">                                
+                                                <ul *ngFor="let msg of objTrip.msgTrip">                                                        
+                                                        <li>{{msg.contentMsg}}
+                                                                <ul>
+                                                                <li>{{msg.ownerMsg}}</li>
+                                                                <li>{{changeDateFormat(msg.dateMsg)}}</li>
+                                                                </ul>
+                                                        </li>
+                                                </ul>                                                                                                           
+                                        </div>
+                                </fieldset>
+                        </div>     
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.listdriverTrip && objTrip.listdriverTrip.length > 0">
+                                        <fieldset class="scheduler-border">
+                                                <legend class="scheduler-border"><h6>Historique des condicteurs</h6></legend>
+                                                <div class="control-group">                                
+                                                        <ul *ngFor="let driver of objTrip.listdriverTrip">                                                        
+                                                                <li>{{driver.nameDriver}} {{driver.surnameDriver}}
+                                                                        <ul>
+                                                                        <li>{{driver.changedDateDriver}}</li>
+                                                                        </ul>
+                                                                </li>
+                                                        </ul>                                                                                                           
+                                                </div>
+                                        </fieldset>
+                                </div>                    
+                        <div class="col-xl-4 text-xs-center" *ngIf="objTrip.image">
+                                <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h6>Image de colis</h6></legend>
+                                        <div class="control-group">                                
+                                                <img [src]="objTrip.image" style="width: 50%; height: 50%;"/>
+                                        </div>
+                                </fieldset>
+                        </div>
+                </div>                         
+        </div>                
+                                       
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="c('Close click')">Fermer</button>                
+            </div>
+</ng-template>
+<ng-template #contentdeleteTrip let-c="close" let-d="dismiss">
+        <div class="modal-body">
+                <div class="row">
+                        <h6>Etes-vous sur de bien vouloir réccupérer le colis REF: {{tripBl.refTrip}} ?</h6>
+                </div> 
+        </div>
+        <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="(c('Close click'))">Annuler</button>                
+                <button type="button" class="btn btn-primary" (click)="deleteTrip(tripBl);(c('Close click'))">Confirmer</button>
+        </div>
+</ng-template>

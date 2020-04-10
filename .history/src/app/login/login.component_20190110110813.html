@@ -1,0 +1,38 @@
+<div class="login-page" [@routerTransition]>
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <img src="assets/images/logo.png" width="150px" class="user-avatar" />
+            <h1>PACKWAYS</h1>
+            <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="rd-admin" name="rd-btn" mdbInputDirective>
+                    <label class="form-check-label" for="rd-admin">Admin</label>
+            </div>
+                  
+                  <!-- Material inline 2 -->
+            <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="rd-user" name="rd-btn" mdbInputDirective>
+                    <label class="form-check-label" for="rd-user">User</label>
+            </div>
+                  
+                  <!-- Material inline 3 -->
+            <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" id="rd-driver" name="rd-btn" mdbInputDirective>
+                    <label class="form-check-label" for="rd-driver">Driver</label>
+            </div>
+            <form role="form">
+                <div class="form-content">
+                    <div class="form-group">
+                        <input type="text" ng-model="name" class="form-control input-underline input-lg" id="" placeholder="{{ 'Email' | translate }}">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="{{ 'Password' | translate }}">
+                    </div>
+                </div>
+                <a class="btn rounded-btn" [routerLink]="['/dashboard']" (click)="onLoggedin()">{{ 'Log in' | translate }}</a>
+                &nbsp;
+                <a class="btn rounded-btn" [routerLink]="['/signup']">{{ 'Register' | translate }}</a>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="'Gestion de caisse'" [icon]="'fa-table'"></app-page-header>
+ 
+  <div class="row">
+      <div class="col-xl-12 text-xs-center">
+        <div class="row">
+            <div class="col-xl-4 text-xs-center">
+                <fieldset class="scheduler-border-1">
+                    <legend class="scheduler-border-1"><h2><b>Caisse Totale:</b></h2></legend>
+                    <h4><b>{{sommeVal}}</b></h4>
+                </fieldset>
+            </div>
+            <div class="col-xl-4 text-xs-center">
+                <fieldset class="scheduler-border-1">
+                    <legend class="scheduler-border-1"><h2><b>Caisse des Clients:</b></h2></legend>
+                    <h4><b>{{somme}}</b></h4>
+                </fieldset>
+            </div>
+            <div class="col-xl-4 text-xs-center">
+                <fieldset class="scheduler-border-1">
+                    <legend class="scheduler-border-1"><h2><b>Caisse Packways:</b></h2></legend>
+                    <h4><b>{{sommeCout}}</b></h4>
+                </fieldset>
+            </div>
+      </div>
+    </div>
+        <div class="col col-xl-12 col-lg-12">
+          <div class="card mb-3">
+            <div class="card-header">
+              <div class="row"> 
+                    <div class="col-xl-9 text-xs-center">
+                        <form class="form-inline my-2 my-lg-0">
+                            <input class="form-control mr-sm-4" type="text" id="myInput" placeholder="Chercher" [(ngModel)]="searchTerm" [ngModelOptions]="{standalone: true}" (input)="setFilteredItems()">
+                        </form>
+                    </div>
+                    <div align="right" class="col-xl-3 text-xs-center">
+                        <button align="right" type="button" class="btn btn-info" (click)="open(content)">Détails par client</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div class="card-body table-responsive">                                                     
+          <table class="table" [mfData]="items" #mf="mfDataTable"  id="myTable">
+                  <thead>
+                          <tr>
+                                  
+                                  <th style="width:2%">REF</th>
+                                  <th style="width:10%">Source</th>
+                                  <th style="width:10%">Déstination</th>
+                                  <th style="width:10%"><mfDefaultSorter by="statusTrip">Status</mfDefaultSorter></th>
+                                  <th style="width:6%"><mfDefaultSorter by="userTrip.nameUser">Expéditeur</mfDefaultSorter></th>
+                                  <th style="width:10%">Date d'encaissement</th>
+                                  <th style="width:2%">Frais</th>
+                                  <th style="width:3%">Prix</th>
+                                  <th style="width:4%">E.financier</th>
+                                  <th style="width:3%">Tentatives</th>
+                                  
+                          </tr>
+                  </thead>
+                  
+                  <tbody>
+                          <tr *ngFor="let trip of items" >
+                                  <td >{{trip.refTrip}}</td>
+                                  <td>{{trip.sourceTrip.cityAdr}}</td>
+                                  <td>{{trip.destTrip.cityAdr}}</td>
+                                  <td>{{trip.statusTrip}}</td>
+                                  <td>{{ trip.userTrip.nameUser }}</td>
+                                  <td>{{changeDateFormat(trip.recoltdate)}}</td>
+                                  <td>{{ trip.costTrip }}</td>
+                                  <td>{{ trip.packageTrip.valPackage }}</td>
+                                  <td>{{ showFinancialStatus(trip) }}</td>
+                                  <td >{{ trip.nbTentative }}</td>
+                                  
+                          </tr>
+                  </tbody>
+          </table>
+  </div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-body">
+                <div class="row justify-content-center">
+                        <h2 style="color:rgb(23, 6, 175)"><b><u>Caisse par Client</u></b></h2>
+                </div> 
+        </div>
+        <div class="card-body table-responsive">                                                     
+                <table class="table" [mfData]="items1" #mf="mfDataTable"  id="myTable">
+                        <thead>
+                                <tr>
+                                        <th style="width:3%">Client</th>
+                                        <th style="width:4%">Nombre des colis récoltés</th>
+                                        <th style="width:3%">Somme Totale</th>
+                                        <th style="width:3%">Caisse Client</th>
+                                        <th style="width:3%">Caisse Packways</th>
+                                        
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr *ngFor="let colis of items1" >
+                                        <td>{{ colis[0] }}</td>
+                                        <td>{{ colis[1]}}</td>
+                                        <td >{{ colis[2] }}</td>
+                                        <td >{{ colis[3] }}</td>
+                                        <td >{{ colis[4] }}</td>
+                                        
+                                </tr>
+                        </tbody>
+                </table>
+            </div>
+        <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="(c('Close click'))">Fermer</button> 
+        </div>
+</ng-template>

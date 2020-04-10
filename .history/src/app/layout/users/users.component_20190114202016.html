@@ -1,0 +1,334 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Utilisateurs'" [icon]="'fa-users'"></app-page-header>
+    <div class="row">
+        <!-- &nbsp;&nbsp;&nbsp;&nbsp;
+        <h3>Gestion des utilisateurs</h3> -->
+        <div class="col col-xl-12 col-lg-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-xl-6 text-xs-center">
+                            <form class="form-inline my-2 my-lg-0">
+                                <input class="form-control mr-sm-2" type="text" placeholder="Chercher">
+                            </form>
+                        </div>
+                        <div class="col-xl-6 text-xs-center">
+                            <div class="row">
+                                <div class="col-xl-6 text-xs-center">
+                                </div>
+                                <div class="col-xl-6 text-xs-center">
+                                    <button align="right" type="button" class="btn btn-info" style="width: 50%;" (click)="open(content3)">Ajout</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body table-responsive">
+                    <table class="table" [mfData]="items.reverse()" #mf="mfDataTable" [mfRowsOnPage]="10">
+                        <thead>
+                            <tr>
+                                <th style="width:1%">#</th>
+                                <th style="width:10%">Nom et prènom</th>
+                                <th style="width:10%">Email</th>
+                                <th style="width:10%">Etat du compte</th>
+                                <th style="width:10%">Evaluation</th>
+                                <th style="width:10%">Date de création</th>
+                                <th style="width:10%">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of mf.data" id="adr-row-{{user.idAdress}}">
+                                <td scope="row"><input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></td>
+                                <td>{{user.nameUser}} {{user.surnameUser}}</td>
+                                <td>{{user.emailUser}}</td>
+                                <td>{{user.accountActive}}</td>
+                                <td>{{user.rateUser / user.nbrateUser}}</td>
+                                <td>{{user.createdday}}</td>
+                                <td>
+                                    <button type="button" class="mat-mini-fab" (click)="open(content)">
+                                                              <i class="material-icons" (click)="editUser(user)"> create </i>
+                                                      </button>
+                                    <button type="button" class="mat-mini-fab">
+                                                              <i class="material-icons" (click)="deleteUser(user)"> delete </i>
+                                                      </button>
+                                    <button type="button" class="mat-mini-fab" (click)="open(content2)">
+                                                                      <i class="material-icons" (click)="editUser(user)"> open_in_new </i>
+                                                      </button>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                    <div class="row" hidden>
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <div>
+                                    <div id="gmap" #gmap>
+                                    </div>
+                                    <div id="locator1"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Edit de l'utilisateur:&nbsp; {{objUser.nameUser}} {{objUser.surnameUser}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+          </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xl-6 text-xs-center">
+                <div class="form-group">
+                    <label for="inputNomUser">Nom</label>
+                    <input type="text" class="form-control" id="inputNomUser" [(ngModel)]="objUser.nameUser" name="inputNomUser">
+                </div>
+                <div class="form-group">
+                    <label for="inputCityUser">Prènom</label>
+                    <input type="text" class="form-control" id="inputPrenomUser" [(ngModel)]="objUser.surnameUser" name="inputPrernomUser">
+                </div>
+                <div class="form-group">
+                    <label for="inputContactUser">Telephone</label>
+                    <input type="tel" class="form-control" id="inputTeltUser" [(ngModel)]="objUser.mobileUser" name="inputTeltUser">
+                </div>
+                <div class="form-group">
+                    <label for="inputTelUser">Email</label>
+                    <input type="email" class="form-control" id="inputEmailUser" [(ngModel)]="objUser.emailUser" name="inputEmailUser">
+                </div>
+            </div>
+            <div class="col-xl-6 text-xs-center">
+                <div class="form-group">
+                    <label for="inputTypeUser">Login</label>
+                    <input type="text" class="form-control" id="inputLoginUser" [(ngModel)]="objUser.login" name="inputLoginUser">
+                </div>
+                <div class="form-group">
+                    <label for="inputSharedUser">Mot de passe</label>
+                    <input type="password" class="form-control" id="inputPassUser" [(ngModel)]="objUser.password" name="inputPassUser">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="c('Close click')">Close</button>
+        <button type="button" class="btn btn-primary">Sauvegarder</button>
+    </div>
+</ng-template>
+
+
+<ng-template #content3 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Ajout d'un nouveau utilisateur</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xl-6 text-xs-center">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="inputNewNomUser" name="inputNewNomUser" placeholder="Nom">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="inputNewPrenomUser" name="inputNewPrenomUser" [(ngModel)]="nameUser" placeholder="Prenom">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="inputNewEmailUser" name="inputNewEmailUser" [(ngModel)]="emailUser" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="inputNewTelUser" name="inputNewTelUser" [(ngModel)]="mobileUser" placeholder="Téléphone">
+                </div>
+            </div>
+            <!-- <div class="col-xl-6 text-xs-center">
+                <div class="form-group">
+                    <select id="inputNewTypeUser" class="form-control" [(ngModel)]="typeUser">
+                                              <option value="publique">Publique</option>
+                                              <option value="privee">Privé</option>
+                                      </select>
+                </div>
+                <div class="form-group">
+                    <label for="InputImageUser">Image de l'utilisateur</label>
+                    <input type="file" (change)="onUploadChange($event)" accept=".png, .jpg, .jpeg, .pdf" id="InputImageUser" class="form-control-file" [(ngModel)]="imgUser" aria-describedby="fileHelp" />
+                    <img *ngFor="let ite of base64textString" src={{ite}} alt="" id="img" style="width: 10%; height: 10%;">
+                    <small id="fileHelp" class="form-text text-muted">Taille maximale d'image est 2Mo.</small>
+
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xl-8 text-xs-center">
+                            <input type="text" class="form-control" id="inputNewSharedUser" name="inputNewSharedUser" [(ngModel)]="numTel" placeholder="Partager avec">
+                        </div>
+                        <div class="col-xl-4 text-xs-center">
+                            <span class="btn-group-sm">
+                                                              <button type="button" class="btn btn-secondary bmd-btn-fab bmd-btn-fab-sm" (click)="addNumToList()">
+                                                                      <i class="material-icons">control_point</i>
+                                                              </button>
+                                                      </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ul *ngIf="list">
+                            <li *ngFor="let item of list">{{item}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+
+
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="c('Close click')">Fermer</button>
+        <button type="button" class="btn btn-primary" (click)="addUser()">Ajouter</button>
+    </div>
+</ng-template>
+
+<ng-template #content2 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Détails de l'utilisateur:&nbsp; {{objUser.nameUser}} {{objUser.surnameUser}} </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                      <span aria-hidden="true">&times;</span>
+              </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-xl-6 text-xs-center">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-bold">Nom:</label>
+                        </div>
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-light">{{objUser.mobileUser}}</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="form-group" *ngIf="objUser.cityAdr">
+                    <div class="row">
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-bold">City:</label>
+                        </div>
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-light">{{objUser.cityAdr}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" *ngIf="objUser.contactAdr">
+                    <div class="row">
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-bold">Contact:</label>
+                        </div>
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-light">{{objUser.contactAdr}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="objUser.mobileAdr">
+                    <div class="row">
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-bold">Tel contact:</label>
+                        </div>
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-light">{{objUser.mobileAdr}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" *ngIf="objUser.typeAdr">
+                    <div class="row">
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-bold">Type:</label>
+                        </div>
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-light">{{objUser.typeAdr}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 text-xs-center">
+                <div class="form-group" *ngIf="objUser.sharedtoAdr">
+                    <div class="row">
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-bold">Partager avec:</label>
+                        </div>
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-light">{{objUser.sharedtoAdr}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="objUser.geolocAdr">
+                    <div class="row">
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-bold">Lng/Lat:</label>
+                        </div>
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-light">{{objUser.geolocAdr.lng}}</label>
+                            <label class="font-weight-light">{{objUser.geolocAdr.lat}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="objUser.createdday">
+                    <div class="row">
+                        <div class="col text-xs-center">
+                            <label class="font-weight-bold">Date création:</label>
+                        </div>
+                        <div class="col-md-auto text-xs-center">
+                            <label class="font-weight-light">{{objUser.createdday}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" *ngIf="objUser.userAdr">
+                    <div class="row">
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-bold">Utilisateur:</label>
+                        </div>
+                        <div class="col-xl-6 text-xs-center">
+                            <label class="font-weight-light">{{objUser.userAdr}}</label>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="form-group" *ngIf="objUser.imgAdr">
+                    <img [src]="objUser.imgUser" />
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="c('Close click')">Close</button>
+    </div>
+</ng-template>
+
+
+<ng-template #content4 let-c="close" let-d="dismiss">
+    <div class="modal-body">
+        <div class="row">
+            <h5>Etes-vous sur de bien vouloir supprimer cet élément ?</h5>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="('Close click')">Annuler</button>
+        <button type="button" class="btn btn-primary" (click)="('Close click')">Ok</button>
+    </div>
+</ng-template>

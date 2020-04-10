@@ -1,0 +1,6 @@
+<div class="row">
+        <div class="col-xl-3 col-lg-3" *ngFor="let obj of jsonObj">
+           <!-- <app-stat [bgClass]="'warning'" [icon]="'fa-plus-square'" [count]="postes" [label]="'Colis postés.'" ></app-stat> -->
+            <app-statdriver [bgClass]="'info'" [icon]="'fa fa-car'" [count]="obj"  ></app-statdriver> <br>
+        </div>
+</div>

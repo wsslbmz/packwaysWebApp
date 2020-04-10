@@ -1,0 +1,21 @@
+#gmap {
+    position: relative;
+    height: 500px;
+    margin: 0;
+}
+
+#locator1 {
+    pointer-events: none;
+    background-image: url("src/assets/imgs/person_pin.png");
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 70px;
+    height: 70px;
+    margin-left: -35px;
+    margin-top: -70px;
+}
+
+#alert {
+    margin-top: 30px;
+}

@@ -1,0 +1,91 @@
+<div [@routerTransition]>
+    <h2 class="text-muted" align="center">PACKWAYS <small>Pensons Livraison, Pensez Business</small></h2>
+    <div class="row" hidden>
+        <div class="col-md-12">
+            <ngb-carousel>
+                <ng-template ngbSlide *ngFor="let slider of sliders">
+                    <img class="img-fluid mx-auto d-block" [src]="slider.imagePath" alt="Random first slide" width="100%">
+                    <div class="carousel-caption">
+                        <h3>{{slider.label}}</h3>
+                        <p>{{slider.text}}</p>
+                    </div>
+                </ng-template>
+            </ngb-carousel>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'warning'" [icon]="'fa-plus-square'" [count]="postes" [label]="'Colis postés.'" ></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'info'" [icon]="'fa-spinner'" [count]="ChercheL" [label]="'Colis En attente .'" ></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'success'" [icon]="'fa-truck'" [count]="Enchemin" [label]="'Livreur en chemin.'"></app-stat>
+        </div> 
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'dark'" [icon]="'fa-get-pocket'" [count]="Chezlivreur" [label]="'Colis Chez Livreur'"></app-stat>
+        </div>          
+    </div>
+    <hr />  
+    <hr>
+        <div class="row">
+            <div class="col-xl-3 col-lg-6">
+                <app-stat [bgClass]="'secondary'" [icon]="'fa-play-circle'" [count]="Encours" [label]="'Colis En cours de Livraison.'" ></app-stat>
+            </div> 
+            <div class="col-xl-3 col-lg-6">
+                <app-stat [bgClass]="'primary'" [icon]="'fa-check'" [count]="livree" [label]="'Colis livrés.'" ></app-stat>
+            </div>
+            <div class="col-xl-3 col-lg-6">
+                <app-stat [bgClass]="'info'" [icon]="'fa-spinner'" [count]="Retour" [label]="'Colis En Retour .'" ></app-stat>
+            </div>
+            <div class="col-xl-3 col-lg-6">
+                <app-stat [bgClass]="'warning'" [icon]="'fa-minus-square'" [count]="Retournee" [label]="'Colis Retournés.'" ></app-stat>
+            </div>
+        </div>  
+
+    <hr />
+
+    <div class="row">
+
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'danger'" [icon]="'fa-ban'" [count]="annulee" [label]="'Colis annulés.'" ></app-stat>
+        </div>
+        
+        <div *ngIf="isVisible" class="col-xl-3 col-lg-6">
+                <app-stat [bgClass]="'success'" [icon]="'fa-truck'" [count]="driver[0]" [label]="'Conducteurs actifs.'"></app-stat>
+        </div>
+    </div>
+    <hr />
+    
+    <!-- <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
+    <hr />
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card card-default">
+                <div class="card-header">
+                    <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+                </div>
+                
+                <app-timeline></app-timeline>
+                
+            </div>
+            
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card card-default mb-3">
+                <div class="card-header">
+                    <i class="fa fa-bell fa-fw"></i> Notifications card
+                </div>
+                
+                <app-notification></app-notification>
+                
+            </div>            
+
+            <app-chat></app-chat>            
+        </div>
+        
+    </div> -->
+</div>

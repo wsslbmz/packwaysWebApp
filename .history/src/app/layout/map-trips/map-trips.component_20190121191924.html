@@ -1,0 +1,64 @@
+<div [@routerTransition]>
+    <div class="row">            
+        <div class="col col-xl-12 col-lg-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                        <div class="row">
+                                
+                        </div>                                               
+                                                                                        
+                </div>                                
+                <div class="card-body table-responsive">
+                
+                    <agm-map [latitude]="lat" [longitude]="lng">
+                        <agm-direction 
+                            [origin]="origin" 
+                            [destination]="destination" 
+                            [renderOptions]="renderOptions" 
+                            (status)="getStatus($event)">
+                        </agm-direction>
+                        <agm-direction 
+                            [origin]="origin1" 
+                            [destination]="destination1" 
+                            [waypoints]="waypoints" 
+                            [renderOptions]="renderOptions" 
+                            [markerOptions]="markerOptions" 
+                            [travelMode]="travelMode"
+                            
+                            [drivingOptions]="drivingOptions"
+                            [optimizeWaypoints]="optimizeWaypoints"
+                            [provideRouteAlternatives]="provideRouteAlternatives"
+                            [avoidHighways]="avoidHighways"
+                            [avoidTolls]="avoidTolls"
+                            [visible]="visible"
+                            [infoWindow]="infoWindow"
+                            (sendInfowindow)="obtainInfowindow($event)"
+                            (onChange)="change($event)">
+                        </agm-direction>
+
+                        <agm-direction 
+                            [origin]="origin2" 
+                            [destination]="destination2" 
+                            [waypoints]="waypoints" 
+                            [renderOptions]="renderOptions" 
+                            [markerOptions]="markerOptions" 
+                            [travelMode]="travelMode"
+                            
+                            [drivingOptions]="drivingOptions"
+                            [optimizeWaypoints]="optimizeWaypoints"
+                            [provideRouteAlternatives]="provideRouteAlternatives"
+                            [avoidHighways]="avoidHighways"
+                            [avoidTolls]="avoidTolls"
+                            [visible]="visible"
+                            [infoWindow]="infoWindow"
+                            (sendInfowindow)="obtainInfowindow($event)">
+                        </agm-direction>
+
+                    </agm-map>
+                        
+                        
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>  

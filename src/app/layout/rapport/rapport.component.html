@@ -1,0 +1,157 @@
+<div [@routerTransition]>
+  <app-page-header [heading]="'Gestion des Rapports'" [icon]="'fa-table'"></app-page-header>
+  <div class="row">
+    <div class="col col-xl-12 col-lg-12">
+      <div class="card mb-3">
+        <div class="card-header">
+          <div class="row">                                
+                  <div class="col-xl-3 text-xs-center">
+                          <fieldset class="scheduler-border-1">
+                                  <legend class="scheduler-border-1">Date début</legend>
+                                  <input id="startDateFilter" type="date" class="form-control" name="startDateFilter" [(ngModel)]="startDateFilter">
+                          </fieldset>
+                  </div>
+                  <div class="col-xl-3 text-xs-center">
+                          <fieldset class="scheduler-border-1">
+                                  <legend class="scheduler-border-1">Date fin</legend>
+                                  <input id="endDateFilter" type="date" class="form-control" name="endDateFilter" [(ngModel)]="endDateFilter">
+                          </fieldset>
+                  </div>
+                  <div class="col-xl-3 text-xs-center">
+                          <fieldset class="scheduler-border-1">
+                                  <legend class="scheduler-border-1">Type de rapport</legend>
+                                <!-- <input type="text" class="form-control" id="clientFilter" [(ngModel)]="clientFilter" name="clientFilter" placeholder="Client"> -->
+                                  <select class="form-control" id="typeRapport" [(ngModel)]="typeRapport" name="typeRapport" (change)="getSelectedrapport(typeRapport)"> 
+                                                  <option [ngValue]="undefined" disabled  selected> Selectionner le type de rapport </option>
+                                                  <option [ngValue]="'RACL'">Rapport d'activité Client_Livreur</option>
+                                                  <option [ngValue]="'RAC'">Rapport d'activité Client</option>
+                                                  <option [ngValue]="'RAL'">Rapport d'activité Livreur</option>
+                                                  <option [ngValue]="'RAS'">Rapport d'activité par jour</option>
+                                                  <option [ngValue]="'RAMSG'">Rapport d'activité des Msg</option>
+                                                  <option [ngValue]="'RADES'">Rapport d'activité des destinataires</option>                                              
+                                  </select>
+                          </fieldset>
+                  </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        <div class="card-body table-responsive" *ngIf="flageRACL || flageRAC || flageRAL || flageRAS" >                                                     
+                <table class="table" [mfData]="items" #mf="mfDataTable"  id="myTable">
+                        <thead>
+                                <tr>
+                                        
+                                        <th style="width:2%">Date</th>
+                                        <th *ngIf="flageRAC || flageRACL" style="width:10%">Client</th>
+                                        <th *ngIf="flageRAL|| flageRACL" style="width:10%">Livreur</th>
+                                        <th style="width:10%">Nombre des colis livrées</th>
+                                        <th style="width:6%">Valeur des colis livrées</th>
+                                        <th style="width:10%">Nombre de retour facturé </th>
+                                        <th style="width:2%">Nombre de retour non facturé</th>
+                                        <th style="width:3%">Nombre des colis NJ</th>
+                                        <th style="width:4%">Nombre des Tentatives d'appel</th>
+                                        <th style="width:3%">Nombre des rammassage</th>
+                                        
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr *ngFor="let racl of items" >
+                                        <td >{{racl.date}}</td>
+                                        <td *ngIf="flageRAC || flageRACL">{{getUser(racl.client)}}</td>
+                                        <td *ngIf="flageRAL || flageRACL">{{getDriver(racl.livreur)}}</td>
+                                        <td>{{racl.nbLivree}}</td>
+                                        <td>{{ racl.valeurLivree }}</td>
+                                        <td>{{racl.nbRetourFacturee}}</td>
+                                        <td>{{ racl.nbRetourNonFacturee }}</td>
+                                        <td>{{ racl.nbColisNJ }}</td>
+                                        <td>{{ racl.nbTentativeAppel}}</td>
+                                        <td >{{ racl.nbRamassage }}</td>
+                                        
+                                </tr>
+                        </tbody>
+                        
+                        
+                </table>
+        </div>
+        <div class="card-body table-responsive" *ngIf="flageRADes" >                                                     
+                <table class="table" [mfData]="items" #mf="mfDataTable"  id="myTable">
+                        <thead>
+                                <tr>
+                                        
+                                        <th style="width:2%">N°tél</th>
+                                        <th style="width:10%">Nom & prénom</th>
+                                        <th style="width:10%">Nombre des colis livrées</th>
+                                        <th style="width:6%">Valeur des colis livrées</th>
+                                        <th style="width:10%">Nombre des colis retournnés</th>
+                                        <th style="width:2%">Valeur de retour non facturé</th>
+                                        <th style="width:3%">Nombre des msg non conforme</th>
+                                        <th style="width:3%">Nombre des msg AbsRDV</th>
+                                        <th style="width:3%">Nombre des msg NJ</th>
+                                        <th style="width:3%">Nombre des msg livraison reporté</th>
+                                        <th style="width:3%">Nombre des msg autres</th>
+                                        <th style="width:4%">Taux d'achat</th>
+                                        
+                                </tr>
+                        </thead>
+                       
+                        <tbody>
+                                <tr *ngFor="let racl of items" >
+                                        <td >{{racl.mobile}}</td>
+                                        <td>{{racl.nomPrenom}}</td>
+                                        <td>{{racl.nbColisLivree}}</td>
+                                        <td>{{racl.valeurColisLivree}}</td>
+                                        <td>{{ racl.nbColisRetour }}</td>
+                                        <td>{{racl.valeurColisRetour}}</td>
+                                        <td>{{ racl.nbMsgNonConforme }}</td>
+                                        <td>{{ racl.nbMsgAbsRDV }}</td>
+                                        <td>{{ racl.nbMsgNJ}}</td>
+                                        <td >{{ racl.nbMsgRepotee }}</td>
+                                        <td >{{ racl.nbMsgAutre }}</td>
+                                        <td >{{ racl.tauxAchat }}%</td>
+                                        
+                                </tr>
+                        </tbody>
+                        
+                </table>
+        </div>
+        <div class="card-body table-responsive" *ngIf="flageRAmsg" >                                                     
+                <table class="table" [mfData]="items" #mf="mfDataTable"  id="myTable">
+                        <thead>
+                                <tr>
+                                        
+                                        <th style="width:2%">Date</th>
+                                        <th style="width:3%">Nombre des msg non conforme</th>
+                                        <th style="width:3%">Nombre des msg AbsRDV</th>
+                                        <th style="width:3%">Nombre des msg NJ</th>
+                                        <th style="width:3%">Nombre des msg livraison reporté</th>
+                                        <th style="width:3%">Nombre des msg num incorrect</th>
+                                        <th style="width:3%">Nombre des msg Adr incorrect</th>
+                                        <th style="width:3%">Nombre des msg colis perdu</th>
+                                        <th style="width:3%">Nombre des msg colis endomagé</th>
+                                        <th style="width:3%">Nombre des msg autres</th>
+                                        <th style="width:3%">Nombre total des msg</th>
+                                        
+                                </tr>
+                        </thead>
+                        <tbody>
+                                <tr *ngFor="let ramsg of items" >
+                                        <td >{{ramsg.date}}</td>
+                                        <td>{{ramsg.nbMsgColisNonConforme}}</td>
+                                        <td>{{ramsg.nbMsgAbsentRDV}}</td>
+                                        <td>{{ramsg.nbMsgClientNJ}}</td>
+                                        <td>{{ ramsg.nbMsgLivraisonreportee }}</td>
+                                        <td>{{ramsg.nbMsgNumIncorrect}}</td>
+                                        <td>{{ ramsg.nbMsgAdrIncorrect }}</td>
+                                        <td>{{ ramsg.nbMsgColisPerdu}}</td>
+                                        <td >{{ ramsg.nbMsgColisEndomagee }}</td>
+                                        <td >{{ ramsg.nbMsgAutre }}</td>
+                                        <td >{{ ramsg.totalMsg }}</td>
+                                </tr>
+                        </tbody>
+                        
+                        
+                </table>
+        </div>
+  </div>
+</div>
+  

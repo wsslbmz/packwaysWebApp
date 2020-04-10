@@ -1,0 +1,111 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Profil'" [icon]="'fa-users'"></app-page-header>
+    <div class="row">
+        <!-- &nbsp;&nbsp;&nbsp;&nbsp;
+        <h3>Gestion des utilisateurs</h3> -->
+        <div class="col col-xl-12 col-lg-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="text-center">
+                        <h2><b>Profil utilisateur</b></h2>
+                        
+                    </div>
+  
+                </div>
+  
+                <div class="row">
+                        <div class="col-xl-12 text-xs-center">
+                            <div class="row ">
+                                <div class="col-xl-4 text-xs-center">
+                                    <fieldset class="scheduler-border">
+                                        <legend class="scheduler-border"><h3><b>{{objUser.nameUser}} {{objUser.surnameUser}}</b></h3> </legend>
+                                        <div class="control-group justify-content-center" >                                
+                                                <img  class="rounded-circle" [src]="objUser.imgUser" width= "100%" height ="20%" *ngIf="objUser.imgUser!==null" />
+                                        </div>
+                                </fieldset>
+                                  
+                                </div>
+                                    <div class="col-xl-8 text-xs-center">
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border"><h3>Paramètre du compte</h3></legend>
+                                              <div class="form-group">
+                                                  <label for="inputTelUser">Email</label>
+                                                  <input type="email" class="form-control" id="inputEmailUser" [(ngModel)]="objUser.emailUser" name="inputEmailUser">
+                                              </div>
+                                              <div class="form-group">
+                                                  <label for="inputTypeUser">Login</label>
+                                                  <input type="text" class="form-control" id="inputLoginUser" [(ngModel)]="objUser.login" name="inputLoginUser">
+                                              </div>
+                                              <div class="form-group">
+                                                  <label for="inputSharedUser">Mot de passe</label>
+                                                  <input type="password" class="form-control" id="inputPassUser" [(ngModel)]="objUser.password" name="inputPassUser">
+                                              </div>
+                                              <div class="form-group">
+                                                      <label for="inputparenage">Code Parrainage</label>
+                                                      <input type="text" class="form-control" id="inputParenage" [(ngModel)]="objUser.codeParenage" name="inputcodeParenage" disabled>
+                                              </div>
+                                              <div class="form-group">
+                                                  <label for="inputparenage">Code Parrain</label>
+                                                  <input type="text" maxlength="7" class="form-control" id="inputPar" [(ngModel)]="objUser.codeParan" name="inputcodeParan" *ngIf="disable" disabled>
+                                                  <input type="text" maxlength="7" class="form-control" id="inputPar" [(ngModel)]="objUser.codeParan" name="inputcodeParan" *ngIf="!disable" >
+                                          </div>
+                          
+                                              <div class="form-group">
+                                                  <label for="inputcout">Coût Livraison</label>
+                                                  <input type="text" class="form-control" id="inputcout" [(ngModel)]="objUser.cout" name="inputcout" disabled>
+                                              </div>
+                                        </fieldset>
+                                        <fieldset class="scheduler-border">
+                                            <legend class="scheduler-border"><h3>Paramètre du profil</h3></legend>
+                                            <div class="form-group">
+                                                <label for="inputNomUser">Nom</label>
+                                                <input type="text" class="form-control" id="inputNomUser" [(ngModel)]="objUser.nameUser" name="inputNomUser">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputCityUser">Prénom</label>
+                                                <input type="text" class="form-control" id="inputPrenomUser" [(ngModel)]="objUser.surnameUser" name="inputPrernomUser">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputContactUser">Telephone</label>
+                                                <input type="tel" class="form-control" id="inputTeltUser" [(ngModel)]="objUser.mobileUser" name="inputTeltUser">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputAdressUser">Adresse</label>
+                                                <input type="text" class="form-control" id="inputAdressUser" [(ngModel)]="objUser.adressUser" name="inputAdressUser">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputnomSte">Nom Sté</label>
+                                                <input type="text" class="form-control" id="inputnomSte" [(ngModel)]="objUser.steUser" name="inputnomSte">
+                                            </div>
+                                            <div class="form-group">
+                                                    <label for="inputAdressUser">MF</label>
+                                                    <input type="text" class="form-control" id="inputmf" [(ngModel)]="objUser.mfUser" name="inputmf">
+                                            </div>
+                                          </fieldset>
+                                    </div>
+                                    
+                                </div>
+                        
+                        
+                            </div>
+                        
+                </div>
+                <div class="text-right">
+                  <button type="button" class="btn btn-primary" style="width:20%" (click)="openC(content1)">Sauvgarder</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+  </div>
+  <ng-template #content1 let-c="close" let-d="dismiss">
+      <div class="modal-body">
+              <div class="row justify-content-center">
+                      <h5>Etes-vous sur de bien vouloir sauvgarder les modifications ?</h5>
+              </div> 
+      </div>
+      <div class="modal-footer">
+              <button type="button" class="btn btn-danger" (click)="(c('Close click'))">Annuler</button>                
+              <button type="button" class="btn btn-primary" (click)="Update();(c('Close click'))">Confirmer</button>
+      </div>
+</ng-template>

@@ -1,0 +1,15 @@
+<div [@routerTransition]>
+    <p>
+        address works!
+      </p>
+      <input class="form-control mr-sm-3" type="text" 
+placeholder="Search for Location" autocorrect="off" n 
+autocapitalize="off"
+spellcheck="off" class="form-control" #search  id="pac-input" 
+class="controls">
+
+<agm-map [latitude]="lat" [longitude]="lng" #agmMap>
+<agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+</agm-map>
+</div>
+

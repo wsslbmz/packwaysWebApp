@@ -1,0 +1,68 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'PickUp'" [icon]="'fa-users'"></app-page-header>
+    <div class="row">
+        <!-- &nbsp;&nbsp;&nbsp;&nbsp;
+        <h3>Gestion des utilisateurs</h3> -->
+        <div class="col col-xl-12 col-lg-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-xl-12 text-xs-center">
+                            <div class="row">
+                                <div class="col-xl-2 text-xs-center">
+                                    <fieldset class="scheduler-border-1">
+                                            <legend class="scheduler-border-1">Date début</legend>
+                                            <input id="startDate" type="date" class="form-control" name="startDate" [(ngModel)]="startDate">
+                                    </fieldset>
+                                </div>                                
+                                <div class="col-xl-2 text-xs-center"> 
+                                    <fieldset class="scheduler-border-1">
+                                            <legend class="scheduler-border-1">Date fin</legend>
+                                            <input id="endDate" type="date" class="form-control" name="endDate" [(ngModel)]="endDate">
+                                    </fieldset>                                   
+                                </div>
+                                <div class="col-xl-2 text-xs-center">
+                                    <button align="right" type="button" class="btn btn-info" style="margin-top: 20px;" (click)="getNbTripsByUserAndDate()">Actualiser</button>
+                                </div>                            
+                            </div>                            
+                        </div>
+                        
+                    </div>
+  
+                </div>
+  
+                <div class="row">
+                        <div class="center">
+                        <div class="col-xl-6 text-xs-center">
+                                <div class="card-body table-responsive">
+                                    <table class="table table-hover table-bordered" [mfData]="items" #mf="mfDataTable" [mfRowsOnPage]="30">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:20%">Nom et prènom</th>
+                                                <th style="width:7%">Nombre de colis postés</th>                                
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let tripsUser of mf.data">                                
+                                                <td>{{tripsUser[0]}}</td>
+                                                <td>{{tripsUser[1]}}</td>                                                                
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>                    
+                                </div>
+                        </div>
+                        </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+  </div>
+

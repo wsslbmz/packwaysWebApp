@@ -1,0 +1,36 @@
+<div [@routerTransition]>
+    
+      <button align="right" type="button" class="btn btn-info" style="width: 50%;" (click)="open(content1)">Ajout</button>
+</div>
+
+<ng-template #content1 let-c="close" let-d="dismiss">
+    <div class="modal-body">
+        <div class="container">
+            <h1></h1>
+            <div class="form-group">
+              <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl" id="inputAdrModal">
+            </div>
+            <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom" (mapClick)="mapClicked($event)" id="map" #map>
+              <agm-marker [latitude]="latitude" [longitude]="longitude" [markerDraggable]="true" (dragEnd)="markerDragEnd(this, $event)"></agm-marker>
+              <agm-marker
+            *ngFor="let m of markers; let i = index"
+            (markerClick)="clickedMarker(m.label, i)"
+            [latitude]="m.lat"
+            [longitude]="m.lng"
+            [label]="m.label"
+            [markerDraggable]="m.draggable"
+            (dragEnd)="markerDragEnd(m, $event)">
+      
+          <agm-info-window>
+            <strong>InfoWindow content</strong>
+          </agm-info-window>
+      
+            </agm-marker>
+            </agm-map>
+        </div> 
+    </div>
+    <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="c('Close click')">Annuler</button>                
+            <button type="button" class="btn btn-primary" (click)="c('Close click')">Ajuster</button>
+    </div>
+</ng-template>

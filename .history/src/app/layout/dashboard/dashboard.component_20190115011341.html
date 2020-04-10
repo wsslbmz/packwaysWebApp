@@ -1,0 +1,62 @@
+<div [@routerTransition]>
+    <h2 class="text-muted" align="center">PACKWAYS <small>Pensons Livraison, Pensez Business</small></h2>
+    <div class="row">
+        <div class="col-md-12">
+            <ngb-carousel>
+                <ng-template ngbSlide *ngFor="let slider of sliders">
+                    <img class="img-fluid mx-auto d-block" [src]="slider.imagePath" alt="Random first slide" width="100%">
+                    <div class="carousel-caption">
+                        <h3>{{slider.label}}</h3>
+                        <p>{{slider.text}}</p>
+                    </div>
+                </ng-template>
+            </ngb-carousel>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'primary'" [icon]="'fa-plus-square'" [count]="26" [label]="'Nombre de colis postés!'" ></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'warning'" [icon]="'fa-people-carry'" [count]="12" [label]="'Nombre de colis livrés!'" ></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'success'" [icon]="'fa-ban'" [count]="124" [label]="'Nombre de colis annulés!'" ></app-stat>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+            <app-stat [bgClass]="'danger'" [icon]="'fa-car'" [count]="13" [label]="'Nombre de conducteurs actives!'"></app-stat>
+        </div>
+    </div>
+    <hr />
+    
+    <!-- <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
+    <hr />
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card card-default">
+                <div class="card-header">
+                    <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+                </div>
+                
+                <app-timeline></app-timeline>
+                
+            </div>
+            
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card card-default mb-3">
+                <div class="card-header">
+                    <i class="fa fa-bell fa-fw"></i> Notifications card
+                </div>
+                
+                <app-notification></app-notification>
+                
+            </div>            
+
+            <app-chat></app-chat>            
+        </div>
+        
+    </div> -->
+</div>

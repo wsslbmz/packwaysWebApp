@@ -1,0 +1,24 @@
+<div [@routerTransition]>
+    <div class="row">
+            &nbsp;&nbsp;&nbsp;&nbsp; <h3>Map Trips</h3>
+        <div class="col col-xl-12 col-lg-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                        <div class="row">
+                                
+                        </div>                                               
+                                                                                        
+                </div>                                
+                <div class="card-body table-responsive">
+                
+                    <agm-map [latitude]="lat" [longitude]="lng">
+                        <agm-direction [origin]="origin" [destination]="destination">
+                        </agm-direction>
+                      </agm-map>
+                        
+                        
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>  

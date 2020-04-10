@@ -1,0 +1,365 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Gestion des adresses'" [icon]="'fa-map-marker'"></app-page-header>
+    <div class="row">
+            &nbsp;&nbsp;&nbsp;&nbsp; <h3>Gestion des adresses</h3>
+        <div class="col col-xl-12 col-lg-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                        <div class="row">
+                                <div class="col-xl-6 text-xs-center">
+                                        <form class="form-inline my-2 my-lg-0">
+                                                <input class="form-control mr-sm-2" type="text" placeholder="Chercher" >
+                                        </form>
+                                </div>
+                                <div class="col-xl-6 text-xs-center">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">                         
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">                                                                                                                                                                                              
+                                                            <button align="right" type="button" class="btn btn-info" style="width: 50%;" (click)="openAddModal(content3)">Ajout</button>                                                                                                                                  
+                                                </div>
+                                        </div>
+                                    
+                                </div>
+                        </div>                                               
+                                                                                        
+                </div>
+
+                <ng2-smart-table [settings]="settings" [source]="employees"> </ng2-smart-table>
+                
+                <div class="card-body table-responsive">
+                        <table class="table" [mfData]="items.reverse()" #mf="mfDataTable" [mfRowsOnPage]="5">
+                                <thead>
+                                        <tr>
+                                                <th style="width:1%">#</th>
+                                                <th style="width:10%">Nom</th>
+                                                <th style="width:10%">Cité</th>
+                                                <th style="width:10%">Contact</th>
+                                                <th style="width:10%">Type d'adresse</th>
+                                                <th style="width:10%">Date de création</th>                                                                                               
+                                                <th style="width:10%">Actions</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <tr *ngFor="let adresse of mf.data" id="adr-row-{{adresse.idAdress}}">
+                                                <td scope="row"><input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></td>
+                                                <td>{{adresse.labelAdr}}</td>
+                                                <td>{{adresse.cityAdr}}</td>
+                                                <td>{{adresse.contactAdr}}</td>
+                                                <td>{{adresse.typeAdr}}</td>
+                                                <td>{{adresse.createdday}}</td>                                                
+                                                <td>
+                                                        <button type="button" class="mat-mini-fab" (click)="open(content)">
+                                                                <i class="material-icons" (click)="editAdresse(adresse)"> create </i>
+                                                        </button>                                                        
+                                                        <button type="button" class="mat-mini-fab">
+                                                                <i class="material-icons" (click)="deleteAdresse(adresse)"> delete </i>
+                                                        </button>          
+                                                        <button type="button" class="mat-mini-fab" (click)="open(content2)">
+                                                                        <i class="material-icons" (click)="editAdresse(adresse)"> open_in_new </i>
+                                                        </button>                                              
+                                                </td>
+
+                                        </tr>
+                                </tbody>
+                                <tfoot>
+                                        <tr>
+                                                <td colspan="4">
+                                                        <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+                                                </td>
+                                        </tr>
+                                </tfoot>
+                        </table>  
+                        
+                        <div class="row" hidden>
+                                <div class="col-md-12">
+                                        <div class="text-center">
+                                        <div>
+                                                <div id="gmap" #gmap>
+                                                </div>
+                                                <div id="locator1"></div>
+                                        </div>
+                                        </div>
+                                </div>
+                                <br>
+                        </div>
+                        
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>  
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Edit de l'adresse:&nbsp; {{objAdresse.labelAdr}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+    </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xl-6 text-xs-center">                        
+                        <div class="form-group">
+                                <label for="inputNomAdresse">Nom</label>
+                                <input type="text" class="form-control" id="inputNomAdresse" [(ngModel)]="objAdresse.labelAdr" name="inputNomAdresse">
+                        </div>
+                        <div class="form-group">
+                                <label for="inputCityAdresse">Cité</label>
+                                <input type="text" class="form-control" id="inputCityAdresse" [(ngModel)]="objAdresse.cityAdr" name="inputCityAdresse">                
+                        </div>
+                        <div class="form-group">
+                                <label for="inputContactAdresse">Nom de Contact</label>
+                                <input type="text" class="form-control" id="inputContactAdresse" [(ngModel)]="objAdresse.contactAdr" name="inputContactAdresse">
+                        </div>
+                        <div class="form-group">
+                                <label for="inputTelAdresse">Téléphone de contact</label>
+                                <input type="text" class="form-control" id="inputTelAdresse" [(ngModel)]="objAdresse.mobileAdr" name="inputTelAdresse">
+                        </div>                                                 
+                </div>
+                <div class="col-xl-6 text-xs-center">
+                        <div class="form-group">
+                                <label for="inputTypeAdresse">Type d'adresse</label>
+                                <input type="text" class="form-control" id="inputTypeAdresse" [(ngModel)]="objAdresse.typeAdr" name="inputTypeAdresse">                
+                        </div>
+                        <div class="form-group">
+                                <label for="inputSharedAdresse">Partager avec</label>
+                                <input type="text" class="form-control" id="inputSharedAdresse" [(ngModel)]="objAdresse.sharedtoAdr" name="inputSharedAdresse">                
+                        </div>                         
+                </div>                                
+            </div>
+            <div align="center" class="row">                        
+                <div class="col">
+                        <img src="https://maps.googleapis.com/maps/api/staticmap?center={{objAdresse.geolocAdr.lat}},{{objAdresse.geolocAdr.lng}}&zoom=12&size=800x320&markers=color:red%7Clabel:D%7C{{objAdresse.geolocAdr.lat}},{{objAdresse.geolocAdr.lng}}&maptype=roadmap&key=AIzaSyDfv9xCJhmLahpNkDvNDUmZ8jSkHiA19oE"/>                                                                                             
+                </div> 
+            </div>                        
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="c('Close click')">Close</button>
+            <button type="button" class="btn btn-primary" >Sauvegarder</button>
+        </div>
+</ng-template>
+
+
+<ng-template #content3 let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title">Ajout d'un nouveau adresse</h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+                <div class="row">
+                        <div class="col-xl-6 text-xs-center">                     
+                                <div class="form-group">                                        
+                                        <!-- <input #searchTextFiel type="text" class="google-place-input" google-place (onSelect)="autoMaps()" size="50" placeholder="Enter a location" autocomplete="on" runat="server" /> -->                                        
+                                        <!-- <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"/> -->
+                                        <input type="text" class="form-control" id="inputNewNomAdresse" name="inputNewNomAdresse" placeholder="Cité" autocomplete="on">
+                                        <!-- <ng-auto-complete (selected)="Selected($event)" [classes]="['']" [group]="group" class="form-control" id="inputNewNomAdresse" name="inputNewNomAdresse"> </ng-auto-complete> -->
+                                </div>
+                                <div class="form-group">                                        
+                                        <input type="text" class="form-control" id="inputNewLabelAdresse" name="inputNewLabelAdresse" [(ngModel)]="labelAdresse" placeholder="Label" required>                
+                                </div>
+                                <div class="form-group">                                        
+                                        <input type="text" class="form-control" id="inputNewContactAdresse" name="inputNewContactAdresse" [(ngModel)]="nomContact" placeholder="Nom de contact">
+                                </div>
+                                <div class="form-group">                                        
+                                        <input type="text" class="form-control" id="inputNewTelAdresse" name="inputNewTelAdresse" [(ngModel)]="telContact" placeholder="Téléphone de contact">
+                                </div>                                                 
+                        </div>
+                        <div class="col-xl-6 text-xs-center">                                
+                                <div class="form-group">
+                                        <select id="inputNewTypeAdresse" class="form-control" [(ngModel)]="typeAdresse">
+                                                <!-- <option [ngValue]="null">Choisir le type d'adresse</option> -->
+                                                <option value="publique">Publique</option>
+                                                <option value="privee">Privé</option>
+                                        </select>
+                                </div> 
+                                <div class="form-group">
+                                        <label for="InputImageAdresse">Image de l'adresse</label>
+                                        <input type="file" (change)="onUploadChange($event)" accept=".png, .jpg, .jpeg" id="InputImageAdresse" class="form-control-file" [(ngModel)]="imgAdresse" aria-describedby="fileHelp"/>
+                                        <img *ngFor="let ite of base64textString"  src={{ite}} alt="" id="img" style="width: 10%; height: 10%;">
+                                        <small id="fileHelp" class="form-text text-muted">Taille maximale d'image est 2Mo.</small>
+
+                                </div>                               
+                                <div class="form-group">
+                                        <div class="row">
+                                                <div class="col-xl-8 text-xs-center">
+                                                        <!-- <label for="inputNewSharedAdresse">Partager avec</label> -->
+                                                        <input type="text" class="form-control" id="inputNewSharedAdresse" name="inputNewSharedAdresse" [(ngModel)]="numTel" placeholder="Partager avec">
+                                                </div>
+                                                <div class="col-xl-4 text-xs-center">
+                                                        <span class="btn-group-sm">
+                                                                <button type="button" class="btn btn-secondary bmd-btn-fab bmd-btn-fab-sm" (click)="addNumToList()">
+                                                                        <i class="material-icons">control_point</i>
+                                                                </button>
+                                                        </span>
+                                                </div>
+                                        </div>
+                                        <div class="row">
+                                                <ul *ngIf="list">
+                                                        <li *ngFor="let item of list">{{item}}</li>
+                                                </ul>                                                
+                                        </div>                                         
+                                </div> 
+                                <input type="text" class="form-control" id="latglob" name="latglob" [(ngModel)]="latGlobal" hidden>
+                                <input type="text" class="form-control" id="lngglob" name="lngglob" [(ngModel)]="lngGlobal" hidden>
+                                <input type="text" class="form-control" id="cityglob" name="cityglob" [(ngModel)]="cityGlobal" hidden>
+                        </div>
+                </div>         
+                <div id="idstatmap" align="center" class="row">                        
+                        <div class="col-xl-4">
+                                <img id="idimgmap" style="width: 50%;" src="https://maps.googleapis.com/maps/api/staticmap?center={{latGlobal}},{{lngGlobal}}&zoom=12&size=800x320&markers=color:red%7Clabel:D%7C{{latGlobal}},{{lngGlobal}}&maptype=roadmap&key=AIzaSyDfv9xCJhmLahpNkDvNDUmZ8jSkHiA19oE"/>                                                                                             
+                        </div> 
+                </div>      
+                
+                
+        </div> 
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="c('Close click')">Fermer</button>
+                <button type="button" class="btn btn-primary" (click)="addAdresse()">Ajouter</button>
+            </div>
+</ng-template>
+
+<ng-template #content2 let-c="close" let-d="dismiss">
+        <div class="modal-header">
+                <h4 class="modal-title">Détails de l'adresse:&nbsp; {{objAdresse.labelAdr}} </h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+                <div class="row">
+                        <div class="col-xl-6 text-xs-center">                        
+                                <div class="form-group" *ngIf="objAdresse.labelAdr">
+                                <div class="row">
+                                        <div class="col-xl-6 text-xs-center">
+                                                <label  class="font-weight-bold">Nom:</label>                                                   
+                                        </div>
+                                        <div class="col-xl-6 text-xs-center">
+                                                <label  class="font-weight-light">{{objAdresse.labelAdr}}</label>                                                                                                           
+                                        </div>
+                                </div>                                    
+                                </div>
+                                <div class="form-group" *ngIf="objAdresse.cityAdr">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">City:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objAdresse.cityAdr}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                                </div>
+
+                                <div class="form-group" *ngIf="objAdresse.contactAdr">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Contact:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objAdresse.contactAdr}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                                </div>
+                                <div class="form-group" *ngIf="objAdresse.mobileAdr">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Tel contact:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objAdresse.mobileAdr}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                                </div>
+
+                                <div class="form-group" *ngIf="objAdresse.typeAdr">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Type:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objAdresse.typeAdr}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                                </div>                                                                                                                                                                                                             
+                        </div>
+                        <div class="col-xl-6 text-xs-center">
+                                <div class="form-group" *ngIf="objAdresse.sharedtoAdr">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Partager avec:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objAdresse.sharedtoAdr}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                                </div>
+                                <div class="form-group" *ngIf="objAdresse.geolocAdr">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Lng/Lat:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objAdresse.geolocAdr.lng}}</label>                                                                                                           
+                                                        <label  class="font-weight-light">{{objAdresse.geolocAdr.lat}}</label>
+                                                </div>
+                                        </div>                                    
+                                </div>
+                                <div class="form-group" *ngIf="objAdresse.createdday">
+                                        <div class="row">
+                                                <div class="col text-xs-center">
+                                                        <label  class="font-weight-bold">Date création:</label>                                                          
+                                                </div>
+                                                <div class="col-md-auto text-xs-center">
+                                                        <label  class="font-weight-light">{{objAdresse.createdday}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                                </div>  
+                                <div class="form-group" *ngIf="objAdresse.userAdr">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Utilisateur:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objAdresse.userAdr}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                                </div>                                
+                                <div class="form-group" *ngIf="objAdresse.imgAdr">
+                                        <div class="row"> 
+                                                <div class="col text-xs-center">
+                                                        <label  class="font-weight-bold">Image de l'adresse:</label>
+                                                </div>
+                                        </div>
+                                        <div class="row">
+                                                <img [src]="objAdresse.imgAdr" style="width: 50%; height: 50%;"/>
+                                        </div>                                                                                                                                                                                                                       
+                                </div>
+                                                                                                                                                                                            
+                        </div>
+                </div> 
+                <div align="center" class="row">                        
+                        <div class="col">
+                                <img src="https://maps.googleapis.com/maps/api/staticmap?center={{objAdresse.geolocAdr.lat}},{{objAdresse.geolocAdr.lng}}&zoom=12&size=800x320&markers=color:red%7Clabel:D%7C{{objAdresse.geolocAdr.lat}},{{objAdresse.geolocAdr.lng}}&maptype=roadmap&key=AIzaSyDfv9xCJhmLahpNkDvNDUmZ8jSkHiA19oE"/>                                                                                             
+                        </div> 
+                </div>                        
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="c('Close click')">Close</button>                
+                </div>
+</ng-template>
+
+
+<ng-template #content4 let-c="close" let-d="dismiss">
+        <div class="modal-body">
+                <div class="row">
+                        <h5>Etes-vous sur de bien vouloir supprimer cet élément ?</h5>
+                </div> 
+        </div>
+        <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="('Close click')">Annuler</button>                
+                <button type="button" class="btn btn-primary" (click)="('Close click')">Ok</button>
+        </div>
+</ng-template>

@@ -1,0 +1,23 @@
+<div class="signup-page" [@routerTransition] style="background-color:rgb(250, 250, 250);">
+  <div class="row  justify-content-md-center">
+          <img class="user-avatar" src="assets/images/logo.png" width="150px" height="100px" />
+  </div>
+  <br><br><br>
+  <div class="row  justify-content-md-center">
+
+    <div class="form-group">
+        <label  style="color:rgb(4, 5, 2);"><h5><b>Merci de saisir votre code de vérification envoyé par email ou par sms:</b></h5></label>
+        
+    </div>
+  </div>
+  <div class="row  justify-content-md-center">
+    <div class="form-group">
+      <input type="text" class="form-control" id="code" [(ngModel)]="codeVerif" name="code">  
+    </div>
+  </div>
+  <div class="row  justify-content-md-center">
+    <div class="form-group">
+      <button mat-raised-button class="btn rounded-btn" type="submit"  (click)="testvalid()" style=" background-color:rgb(128, 185, 66);" [routerLink]="['/login']">{{ 'Valider' | translate }}</button>  
+    </div>
+  </div>
+</div>

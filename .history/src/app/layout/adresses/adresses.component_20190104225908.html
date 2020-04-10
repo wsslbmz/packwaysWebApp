@@ -1,0 +1,567 @@
+<div [@routerTransition]>
+    <app-page-header [heading]="'Tables'" [icon]="'fa-table'"></app-page-header>
+    <div class="row">
+            &nbsp;&nbsp;&nbsp;&nbsp; <h3>Gestion de trips</h3>
+        <div class="col col-xl-12 col-lg-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                        <div class="row">
+                                <div class="col-xl-6 text-xs-center">
+                                        <form class="form-inline my-2 my-lg-0">
+                                                <input class="form-control mr-sm-2" type="text" placeholder="Chercher" >
+                                        </form>
+                                </div>
+                                <div class="col-xl-6 text-xs-center">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">                         
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">                               
+                                                    <div class="row">
+                                                        <div right class="col-xl-4 text-xs-center">
+                                                            <button type="button" class="btn btn-success" style="width: 100%;">Bon livraison</button>
+                                                        </div>
+                                                        <div align="right" class="col-xl-4 text-xs-center">
+                                                            <button type="button" class="btn btn-primary" style="width: 100%;">Décharge</button>
+                                                        </div>
+                                                        <div align="left" class="col-xl-4 text-xs-center">
+                                                            <button type="button" class="btn btn-info" style="width: 100%;" (click)="open(content3)">Ajout</button>
+                                                        </div>
+                                                     </div>                        
+                                                </div>
+                                        </div>
+                                    
+                                </div>
+                        </div>                                               
+                                                                                        
+                </div>
+                
+                <div class="card-body table-responsive">
+                        <table class="table" [mfData]="items.reverse()" #mf="mfDataTable" [mfRowsOnPage]="15">
+                                <thead>
+                                        <tr>
+                                                <th style="width:1%">#</th>
+                                                <th style="width:5%">REF</th>
+                                                <th style="width:10%">Adresse Source</th>
+                                                <th style="width:10%">Adresse déstination</th>
+                                                <th style="width:10%">Status</th>
+                                                <th style="width:10%">Expéditeur</th>
+                                                <th style="width:10%">Date de création</th>
+                                                <th style="width:5%">Frais de livraison</th>
+                                                <th style="width:5%">Prix</th>
+                                                <th style="width:10%">Actions</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <tr *ngFor="let trip of mf.data">
+                                                <td scope="row"><input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></td>
+                                                <td>{{trip.refTrip}}</td>
+                                                <td>{{trip.sourceTrip.cityAdr}}</td>
+                                                <td>{{trip.destTrip.cityAdr}}</td>
+                                                <td>{{trip.statusTrip}}</td>
+                                                <td>{{ trip.userTrip.nameUser }}</td>
+                                                <td>{{ trip.createdday }}</td>
+                                                <td>{{ trip.costTrip }}</td>
+                                                <td>{{ trip.packageTrip.valPackage }}</td>
+                                                <td>
+                                                        <button type="button" class="mat-mini-fab" (click)="open(content)">
+                                                                <i class="material-icons" (click)="editTrip(trip)"> create </i>
+                                                        </button>
+                                                        <button type="button" class="mat-mini-fab" (click)="open(content1)">
+                                                                <i class="material-icons"> file_copy </i>
+                                                        </button>
+                                                        <button type="button" class="mat-mini-fab">
+                                                                <i class="material-icons"> delete </i>
+                                                        </button>
+                                                        <button type="button" class="mat-mini-fab" (click)="open(content2)">
+                                                                <i class="material-icons" (click)="infoTrip(trip)"> open_in_new </i>
+                                                        </button>
+                                                </td>
+
+                                        </tr>
+                                </tbody>
+                                <tfoot>
+                                        <tr>
+                                                <td colspan="4">
+                                                        <mfBootstrapPaginator [rowsOnPageSet]="[]"></mfBootstrapPaginator>
+                                                </td>
+                                        </tr>
+                                </tfoot>
+                        </table>
+
+                    <!-- <table class="table">
+                        <thead>
+                        <tr>
+                            <th style="width:1%">#</th>                            
+                            <th style="width:5%">REF</th>
+                            <th style="width:10%">Adresse Source</th>
+                            <th style="width:10%">Adresse déstination</th>
+                            <th style="width:10%">Status</th>
+                            <th style="width:10%">Expéditeur</th>
+                            <th style="width:10%">Date de création</th>
+                            <th style="width:5%">Frais de livraison</th>
+                            <th style="width:5%">Prix</th>
+                            <th style="width:10%">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                                <tr *ngFor="let trip of items.reverse()">
+                                        <td scope="row"><input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"></td>
+                                        <td>{{ trip.refTrip }}</td>
+                                        <td>{{ trip.sourceTrip.cityAdr }}</td>
+                                        <td>{{ trip.destTrip.cityAdr }}</td>
+                                        <td>{{ trip.statusTrip }}</td>
+                                        <td>{{ trip.userTrip.nameUser }}</td>
+                                        <td>{{ trip.createdday }}</td>
+                                        <td>{{ trip.costTrip }}</td>
+                                        <td>{{ trip.packageTrip.valPackage }}</td>
+                                        <td>
+                                                <button type="button" class="mat-mini-fab" (click)="open(content)">
+                                                  <i class="material-icons"> create </i>
+                                                </button>
+                                                <button type="button" class="mat-mini-fab" (click)="open(content1)">
+                                                    <i class="material-icons"> file_copy </i>
+                                                </button>
+                                                <button type="button" class="mat-mini-fab">
+                                                    <i class="material-icons"> delete </i>
+                                                </button>
+                                                <button type="button" class="mat-mini-fab" (click)="open(content2)">
+                                                    <i class="material-icons"> open_in_new </i>
+                                                </button>
+                                        </td>
+                                </tr>                        
+                        </tbody>
+                    </table>  --> 
+
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>  
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Edit de trip:&nbsp; {{objTrip.refTrip}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+    </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-xl-6 text-xs-center">                        
+                        <div class="form-group">
+                                <label for="inputSourceTrip">Adresse source</label>
+                                <input type="text" class="form-control" id="inputSourceTrip" [(ngModel)]="objTrip.sourceTrip.cityAdr" name="inputSourceTrip">
+                        </div>
+                        <div class="form-group">
+                                <label for="inputDestTrip">Adresse déstination</label>
+                                <input type="text" class="form-control" id="inputDestTrip" [(ngModel)]="objTrip.destTrip.cityAdr" name="inputDestTrip">                
+                        </div>
+                        <div class="form-group">
+                                <label for="inputCodeExp">Code éxpéditeur</label>
+                                <input type="text" class="form-control" id="inputCodeExp" [(ngModel)]="objTrip.codeExp" name="inputCodeExp">
+                        </div>
+                        <div class="form-group">
+                                <label for="inputCodeDest">Code déstinataire</label>
+                                <input type="text" class="form-control" id="inputCodeDest" [(ngModel)]="objTrip.codeTrip" name="inputCodeDest">                
+                        </div>
+                        <div class="form-group">
+                                <label for="inputDelais">Délais</label>
+                                <input type="text" class="form-control" id="inputDelais" [(ngModel)]="objTrip.timingTrip" name="inputDelais">                
+                        </div>                        
+                        <div class="form-group">
+                                <label for="inputStatusAc">Status actuelle</label>
+                                <input type="text" class="form-control" id="inputStatusAc" [(ngModel)]="objTrip.statusTrip" name="inputStatusAc">                
+                        </div>
+                        <div class="form-group">
+                                <label for="inputStatusPr">Status précédente</label>
+                                <input type="text" class="form-control" id="inputStatusPr" [(ngModel)]="objTrip.prevStatusTrip" name="inputStatusPr">                
+                        </div>                         
+                </div>
+                <div class="col-xl-6 text-xs-center">
+                        <div class="form-group">
+                                <label for="inputDateCr">Date de création</label>
+                                <input type="text" class="form-control" id="inputDateCr" [(ngModel)]="objTrip.createdday" name="inputDateCr">                
+                        </div>
+                        <div class="form-group">
+                                <label for="inputDateAf">Date d'affectation</label>
+                                <input type="text" class="form-control" id="inputDateAf" [(ngModel)]="objTrip.affectedday" name="inputDateAf">                
+                        </div>
+                        <div class="form-group">
+                                <label for="inputDateRec">Date de récupération</label>
+                                <input type="text" class="form-control" id="inputDateRec" [(ngModel)]="objTrip.getedday" name="inputDateRec">                
+                        </div>
+                        <div class="form-group">
+                                <label for="inputDateStartLiv">Date début de livraison</label>
+                                <input type="text" class="form-control" id="inputDateStartLiv" [(ngModel)]="objTrip.startdelday" name="inputDateStartLiv">                
+                        </div>
+                        <div class="form-group">
+                                <label for="inputDateEndLiv">Date fin de livraison</label>
+                                <input type="text" class="form-control" id="inputDateEndLiv" [(ngModel)]="objTrip.livredday" name="inputDateEndLiv">                
+                        </div>
+                        <div class="form-group">
+                                <label for="inputReturnedday">Date de retour</label>
+                                <input type="text" class="form-control" id="inputReturnedday" [(ngModel)]="objTrip.returnedday" name="inputReturnedday">                
+                        </div>
+                        <div class="form-group">
+                                <label for="inputCostTrip">Coût de livraison</label>
+                                <input type="text" class="form-control" id="inputCostTrip" [(ngModel)]="objTrip.packageTrip.valPackage" name="inputCostTrip">                
+                        </div>                                                 
+                </div>
+            </div>                        
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="c('Close click')">Close</button>
+            <button type="button" class="btn btn-primary" >Sauvegarder</button>
+        </div>
+</ng-template>
+
+<ng-template #content1 let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title">Duplicate</h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-6 text-xs-center">                        
+                            <div class="form-group">
+                                    <label for="inputCodeExp">Code éxpéditeur</label>
+                                    <input type="text" class="form-control" id="inputCodeExp">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputCodeDest">Code déstinataire</label>
+                                    <input type="text" class="form-control" id="inputCodeDest">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDelais">Délais</label>
+                                    <input type="text" class="form-control" id="inputDelais">                
+                            </div>                        
+                            <div class="form-group">
+                                    <label for="inputStatusAc">Status actuelle</label>
+                                    <input type="text" class="form-control" id="inputStatusAc">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputStatusPr">Status précédente</label>
+                                    <input type="text" class="form-control" id="inputStatusPr">                
+                            </div>                         
+                    </div>
+                    <div class="col-xl-6 text-xs-center">
+                            <div class="form-group">
+                                    <label for="inputDateCr">Date de création</label>
+                                    <input type="text" class="form-control" id="inputDateCr">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDateAf">Date d'affectation</label>
+                                    <input type="text" class="form-control" id="inputDateAf">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDateRec">Date de récupération</label>
+                                    <input type="text" class="form-control" id="inputDateRec">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDateStartLiv">Date début de livraison</label>
+                                    <input type="text" class="form-control" id="inputDateStartLiv">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDateEndLiv">Date fin de livraison</label>
+                                    <input type="text" class="form-control" id="inputDateEndLiv">                
+                            </div>                                                 
+                    </div>
+                </div>                        
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="c('Close click')">Close</button>
+                <button type="button" class="btn btn-primary" >Sauvegarder</button>
+            </div>
+</ng-template>
+
+<ng-template #content2 let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title">Détails de trip:&nbsp; {{objTrip.refTrip}} </h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+                <div class="row">
+                    <div class="col-xl-6 text-xs-center">                        
+                            <div class="form-group" *ngIf="objTrip.codeExp">
+                                <div class="row">
+                                        <div class="col-xl-6 text-xs-center">
+                                                <label  class="font-weight-bold">Code éxpéditeur:</label>                                                   
+                                        </div>
+                                        <div class="col-xl-6 text-xs-center">
+                                                <label  class="font-weight-light">{{objTrip.codeExp}}</label>                                                                                                           
+                                        </div>
+                                </div>                                    
+                            </div>
+                            <div class="form-group" *ngIf="objTrip.codeTrip">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Code déstinataire:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.codeTrip}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div>
+
+                            <div class="form-group" *ngIf="objTrip.userTrip.nameUser">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Nom utilisateur:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.userTrip.nameUser}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div>
+                            <div class="form-group" *ngIf="objTrip.userTrip.mobileUser">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Tel utilisateur:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.userTrip.mobileUser}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div>
+
+                            <div class="form-group" *ngIf="objTrip.driverTrip">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Nom conducteur:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.driverTrip.nameDriver}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div>
+                            <div class="form-group" *ngIf="objTrip.driverTrip">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Tel conducteur:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.driverTrip.mobileDriver}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div>
+
+                            <div class="form-group" *ngIf="objTrip.timingTrip">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Délais:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.timingTrip}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div>
+                            <div class="form-group" *ngIf="objTrip.statusTrip">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Status actuelle:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.statusTrip}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div>
+                            <div class="form-group" *ngIf="objTrip.prevStatusTrip">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Status précédente:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.prevStatusTrip}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div> 
+                            <div class="form-group" *ngIf="objTrip.packageTrip.valPackage">
+                                        <div class="row">
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-bold">Coût de livraison:</label>                                                          
+                                                </div>
+                                                <div class="col-xl-6 text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.packageTrip.valPackage}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div>                                                                            
+                    </div>
+                    <div class="col-xl-6 text-xs-center">
+                             <div class="form-group" *ngIf="objTrip.createdday">
+                                        <div class="row">
+                                                <div class="col text-xs-center">
+                                                        <label  class="font-weight-bold">Date de création:</label>                                                          
+                                                </div>
+                                                <div class="col-md-auto text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.createdday}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div>  
+                            <div class="form-group" *ngIf="objTrip.affectedday">
+                                        <div class="row">
+                                                <div class="col text-xs-center">
+                                                        <label  class="font-weight-bold">Date d'affectation:</label>                                                          
+                                                </div>
+                                                <div class="col-md-auto text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.affectedday}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div>
+                            <div class="form-group" *ngIf="objTrip.getedday">
+                                        <div class="row">
+                                                <div class="col text-xs-center">
+                                                        <label  class="font-weight-bold">Date récupération:</label>                                                          
+                                                </div>
+                                                <div class="col-md-auto text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.getedday}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div>
+                            <div class="form-group" *ngIf="objTrip.startdelday">
+                                        <div class="row">
+                                                <div class="col text-xs-center">
+                                                        <label  class="font-weight-bold">Début de livraison:</label>                                                          
+                                                </div>
+                                                <div class="col-md-auto text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.startdelday}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div>  
+                            <div class="form-group" *ngIf="objTrip.livredday">
+                                        <div class="row">
+                                                <div class="col text-xs-center">
+                                                        <label  class="font-weight-bold">Fin de livraison:</label>                                                          
+                                                </div>
+                                                <div class="col-md-auto text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.livredday}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div> 
+                            <div class="form-group" *ngIf="objTrip.returnedday">
+                                        <div class="row">
+                                                <div class="col text-xs-center">
+                                                        <label  class="font-weight-bold">Date de retour:</label>                                                          
+                                                </div>
+                                                <div class="col-md-auto text-xs-center">
+                                                        <label  class="font-weight-light">{{objTrip.returnedday}}</label>                                                                                                           
+                                                </div>
+                                        </div>                                    
+                            </div>
+                            <div class="form-group" *ngIf="objTrip.image">
+                                <img [src]="objTrip.image" />
+                            </div>                                                                                                                                                              
+                    </div>
+                </div>                        
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="c('Close click')">Close</button>
+                <button type="button" class="btn btn-primary" >Sauvegarder</button>
+            </div>
+</ng-template>
+
+<ng-template #content3 let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title">Ajout</h4>
+                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+            <div class="modal-body">
+                    <div class="col-xl-6 text-xs-center">
+                            <div class="form-group">
+                                    <label for="inputRef">Référence</label>
+                                    <input type="text" class="form-control" id="inputRef">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputCodeExp">Code éxpéditeur</label>
+                                    <input type="text" class="form-control" id="inputCodeExp">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputCodeDest">Code déstinataire</label>
+                                    <input type="text" class="form-control" id="inputCodeDest">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDelais">Délais</label>
+                                    <input type="text" class="form-control" id="inputDelais">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputAdresseSr">Addresse source</label>
+                                    <input type="text" class="form-control" id="inputAdresseSr">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputAdresseDest">Addresse déstination</label>
+                                    <input type="text" class="form-control" id="inputAdresseDest">
+                            </div> 
+                            <div class="form-group">
+                                    <label for="inputStatusAc">Status actuelle</label>
+                                    <input type="text" class="form-control" id="inputStatusAc">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputStatusPr">Status précédente</label>
+                                    <input type="text" class="form-control" id="inputStatusPr">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputExp">Nom de l'expéditeur</label>
+                                    <input type="text" class="form-control" id="inputExp">
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputExpTel">Téléphone de l'expéditeur</label>
+                                    <input type="text" class="form-control" id="inputExpTel">
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDest">Nom de déstinataire</label>
+                                    <input type="text" class="form-control" id="inputDest">
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDestTel">Téléphone de déstinataire</label>
+                                    <input type="text" class="form-control" id="inputDestTel">
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDriver">Nom de driver</label>
+                                    <input type="text" class="form-control" id="inputDriver">
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDriverTel">Téléphone de driver</label>
+                                    <input type="text" class="form-control" id="inputDriverTel">
+                            </div>     
+                    </div>
+                    <div class="col-xl-6 text-xs-center">
+                            <div class="form-group">
+                                    <label for="inputDateCr">Date de création</label>
+                                    <input type="text" class="form-control" id="inputDateCr">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDateAf">Date d'affectation</label>
+                                    <input type="text" class="form-control" id="inputDateAf">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDateRec">Date de récupération</label>
+                                    <input type="text" class="form-control" id="inputDateRec">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDateStartLiv">Date début de livraison</label>
+                                    <input type="text" class="form-control" id="inputDateStartLiv">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputDateEndLiv">Date fin de livraison</label>
+                                    <input type="text" class="form-control" id="inputDateEndLiv">                
+                            </div>
+                            <div class="form-group">
+                                    <label for="inputFrais">Frais de livraison</label>
+                                    <input type="text" class="form-control" id="inputFrais">
+                            </div> 
+                            <div class="form-group">
+                                    <label for="inputPrix">Prix</label>
+                                    <input type="text" class="form-control" id="inputPrix">
+                            </div>                         
+                    </div>
+                </div> 
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+            </div>
+</ng-template>

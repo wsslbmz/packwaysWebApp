@@ -1,0 +1,40 @@
+<div [@routerTransition]>
+<div class="container">
+        <h1></h1>
+        <div class="form-group">
+          <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl" id="inputNAdresse">
+        </div>
+        <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom" (mapClick)="mapClicked($event)" id="map" #map>
+          <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+          <agm-marker
+        *ngFor="let m of markers; let i = index"
+        (markerClick)="clickedMarker(m.label, i)"
+        [latitude]="m.lat"
+        [longitude]="m.lng"
+        [label]="m.label"
+        [markerDraggable]="m.draggable"
+        (dragEnd)="markerDragEnd(m, $event)">
+  
+      <agm-info-window>
+        <strong>InfoWindow content</strong>
+      </agm-info-window>
+  
+        </agm-marker>
+        </agm-map>
+      </div>
+      <!-- <button (click)="openModal('custom-modal-1')">Open Modal 1</button> -->
+</div>
+
+<!-- <modal id="custom-modal-1">
+    <div class="modal">
+        <div class="modal-body">
+            <h1>A Custom Modal!</h1>
+            <p>
+                Home page text: <input type="text" [(ngModel)]="bodyText" />
+            </p>
+            <button (click)="closeModal('custom-modal-1');">Close</button>
+        </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>
+ -->
